@@ -1,0 +1,309 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>communitas stem</title>
+    <style>
+        body {
+            font-family: 'Comic Sans MS', cursive, sans-serif; /* Cute and aesthetic font */
+            color: #333; /* dark grey */
+            margin: 0;
+            padding: 0;
+            background-image: url('bgsci.jpg'); /* Background image */
+            background-size: cover; /* Ensure the entire background image is visible */
+            background-repeat: no-repeat; /* No repeat */
+        }
+
+        header {
+            background-color: #b489ac; /* Medium lilac */
+            padding: 5px;
+            text-align: left;
+        }
+
+        header img {
+            height: 140px; /* Set the height of the logo */
+
+        }
+
+        nav {
+            background-color: #fff; /* White */
+            padding: 10px 0;
+            text-align: center;
+        }
+
+        nav a {
+            text-decoration: none;
+            color: #000000; /* White text */
+            padding: 10px 20px; /* Padding adjusted */
+            border-radius: 20px; /* Rounded rectangle shape */
+            background-color: #ffc7e3; /* Pink background color */
+            margin: 0 10px; /* Added margin */
+            display: inline-block; /* Added to make buttons inline */
+        }
+
+        nav a:hover {
+            background-color: #ffa4d2; /* Darker pink on hover */
+        }
+
+        .container {
+            max-width: 800px;
+            margin: 20px auto;
+            padding: 20px; /* Increased padding */
+            border-radius: 20px; /* Rounded rectangle shape */
+            background-color: #ffd3e6; /* Light pink background color */
+        }
+
+        .post, .comment {
+            background-color: #fff; /* White */
+            border-radius: 10px;
+            padding: 10px;
+            margin-bottom: 15px;
+        }
+
+        input[type="text"], textarea {
+            width: 100%;
+            padding: 8px;
+            margin-bottom: 10px;
+            border-radius: 5px;
+            border: 1px solid #000000;
+            box-sizing: border-box;
+        }
+
+        input[type="button"], input[type="submit"], .replyButton {
+            background-color: #b489ac; /* Medium lilac */
+            color: #fff; /* White */
+            padding: 10px 20px;
+            border: none;
+            border-radius: 20px; /* Rounded rectangle shape */
+            cursor: pointer;
+            margin-right: 10px; /* Adjusted margin */
+        }
+
+        input[type="button"]:hover, input[type="submit"]:hover, .replyButton:hover {
+            background-color: #a5769a; /* Darker lilac on hover */
+        }
+
+        /* Modal styles */
+        .modal {
+            display: none; /* Hidden by default */
+            position: fixed; /* Stay in place */
+            z-index: 1; /* Sit on top */
+            left: 0;
+            top: 0;
+            width: 100%;
+            height: 100%;
+            overflow: auto; /* Enable scroll if needed */
+            background-color: rgba(180, 137, 172, 0.7); /* Lilac background with transparency */
+        }
+
+        /* Modal content */
+        .modal-content {
+            background-color: #eb99eb;
+            margin: 15% auto; /* 15% from the top and centered */
+            padding: 20px;
+            border-radius: 20px;
+            width: 60%; /* Could be more or less, depending on screen size */
+            box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
+        }
+
+        /* Close button */
+        .close {
+            color: #aaa;
+            float: right;
+            font-size: 28px;
+            font-weight: bold;
+        }
+
+        .close:hover,
+        .close:focus {
+            color: black;
+            text-decoration: none;
+            cursor: pointer;
+        }
+
+        /* Username submit button */
+        #submitUsername, #submitComment {
+            background-color: #b489ac; /* Medium lilac */
+            color: #fff;
+            border: none;
+            border-radius: 20px;
+            padding: 10px 20px;
+            margin-top: 10px;
+            cursor: pointer;
+        }
+
+        #submitUsername:hover, #submitComment:hover {
+            background-color: #a5769a; /* Darker lilac on hover */
+        }
+
+        /* Comment modal */
+        #commentModal {
+            display: none;
+            position: fixed;
+            z-index: 1;
+            left: 0;
+            top: 0;
+            width: 100%;
+            height: 100%;
+            overflow: auto;
+            background-color: rgba(180, 137, 172, 0.7);
+        }
+
+        /* Comment modal content */
+        .comment-modal-content {
+            background-color: #eb99eb;
+            margin: 15% auto;
+            padding: 20px;
+            border-radius: 20px;
+            width: 60%;
+            box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
+        }
+
+    </style>
+</head>
+<body>
+    <header style="background-image: url('bgsci.jpg'); background-size: cover;">
+         <header style="background-image: url('bgsci.jpg'); background-size: cover;">
+        <img src="logo.png" alt="Logo">
+    </header>    
+    </header>    
+    <nav>
+        <a href="homepage.html">Homepage</a>
+        <a href="about.html">About</a>
+        <a href="prof.html">Profile</a> <!-- Link to profile page -->
+    </nav>
+    <div class="container">
+        <h2>Welcome to ICE STEM Community!</h2>
+        <p>This is a platform for STEM students at International Colleges for Excellence Inc. to communicate and collaborate on their strand or school works.</p>
+        
+        <!-- Form for creating a new post -->
+        <form id="postForm">
+            <h3>Create a New Post</h3>
+            <input type="text" id="postTitle" placeholder="Title" required>
+            <textarea id="postContent" placeholder="Content" rows="4" required></textarea>
+            <input type="button" value="Create Post" onclick="displayModal()"> <!-- Change to button type -->
+        </form>
+
+        <h3>Recent Posts</h3>
+        <div id="posts">
+            <!-- Posts will be dynamically added here -->
+        </div>
+
+        <!-- Modal for Username Input -->
+        <div id="myModal" class="modal">
+            <div class="modal-content">
+                <span class="close" onclick="closeModal()">&times;</span> <!-- Added close functionality -->
+                <h2>Enter Your Username</h2>
+                <input type="text" id="usernameInput" placeholder="Username">
+                <button id="submitUsername">Submit</button>
+            </div>
+        </div>
+
+          <!-- Modal for Comment Input -->
+          <div id="commentModal" class="modal">
+            <div class="comment-modal-content">
+                <span class="close" onclick="closeCommentModal()">&times;</span>
+                <h2>Enter Your Comment</h2>
+                <input type="text" id="commenterInput" placeholder="Your username">
+                <textarea id="commentContent" placeholder="Your comment..." rows="4" required></textarea>
+                <button id="submitComment">Submit</button>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // Get the modal for username input
+        const modal = document.getElementById("myModal");
+        const submitUsernameBtn = document.getElementById("submitUsername");
+
+        // Get the modal for comment input
+        const commentModal = document.getElementById("commentModal");
+        const submitCommentBtn = document.getElementById("submitComment");
+
+        // Event listener for submitting username
+        submitUsernameBtn.addEventListener("click", function() {
+            const username = document.getElementById("usernameInput").value.trim();
+            if (username) {
+                modal.style.display = "none";
+                createPost(username);
+            }
+        });
+
+        // Event listener for submitting comment
+        submitCommentBtn.addEventListener("click", function() {
+            const commenter = document.getElementById("commenterInput").value.trim();
+            const commentContent = document.getElementById("commentContent").value.trim();
+            if (commenter && commentContent) {
+                const comment = document.createElement("div");
+                comment.classList.add("comment");
+                const commentText = document.createElement("p");
+                commentText.innerHTML = `<strong>${commenter}</strong>: ${commentContent}`;
+                comment.appendChild(commentText);
+                currentPost.appendChild(comment); // Append comment to current post
+                closeCommentModal();
+            }
+        });
+
+        // Variable to store reference to the current post being created
+        let currentPost;
+
+        // Function to display the modal for entering comments
+        function displayModal() {
+            modal.style.display = "block";
+        }
+
+        // Function to close the modal for entering comments
+        function closeModal() {
+            modal.style.display = "none";
+        }
+
+        // Function to display the modal for entering comments
+        function displayCommentModal() {
+            commentModal.style.display = "block";
+        }
+
+        // Function to close the modal for entering comments
+        function closeCommentModal() {
+            commentModal.style.display = "none";
+        }
+
+        // Function to create a new post
+        function createPost(username) {
+            const title = document.getElementById("postTitle").value;
+            const content = document.getElementById("postContent").value;
+
+            const postDiv = document.createElement("div");
+            postDiv.classList.add("post");
+
+            const postTitle = document.createElement("h4");
+            postTitle.textContent = title;
+
+            const postContent = document.createElement("p");
+            postContent.textContent = content;
+
+            const postBy = document.createElement("p");
+            postBy.innerHTML = `<em>Posted by: ${username}</em>`;
+
+            postDiv.appendChild(postTitle);
+            postDiv.appendChild(postContent);
+            postDiv.appendChild(postBy);
+
+            const commentButton = document.createElement("button");
+            commentButton.textContent = "Comment";
+            commentButton.setAttribute("class", "replyButton");
+            commentButton.addEventListener("click", function() {
+                displayCommentModal();
+                currentPost = postDiv; // Set current post reference
+            });
+            postDiv.appendChild(commentButton);
+
+            document.getElementById("posts").appendChild(postDiv);
+
+            document.getElementById("postForm").reset();
+        }
+    </script>
+</body>
+</html>
+
+     
